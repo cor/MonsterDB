@@ -5,7 +5,7 @@
                 <link rel="stylesheet" href="../css/stylesheet.css">
         </head>
         <body>
-                <h1>Welcome bla  Monsters</h1>
+                <h1>Welcome bladiebla  Monsters</h1>
 		<?php
 			include 'database.php'
 		?>
