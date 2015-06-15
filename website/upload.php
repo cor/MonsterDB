@@ -63,17 +63,32 @@ if ($uploadOk == 0) {
             if ($Name == "Blad1") {
                 $Reader -> ChangeSheet($Index);
 
+                echo "<hr/>Imported data:<hr/>";
+                echo "<table>";
+                echo "<tr>";
+                echo "<th>Leerling</th><th>Achternaam</th><th>Voornaam</th><th>Studie</th><th>Vak / Toets</th>";
+                echo "</tr>";
+
                 foreach ($Reader as $Row)
                 {
-                    $nummer = $Row[0];
+                    $leerling = $Row[0];
                     $achternaam = $Row[1];
                     $voornaam = $Row[2];
                     $studie = $Row[3];
-                    $vak = $Row[4];
+                    $vak_toets = $Row[4];
 
-                    echo "<br/>nummer: ".$nummer." achternaam: ".$achternaam." voornaam: ".$voornaam." studie: ".$studie." vak: ".$vak;
+                    echo "<tr>";
+                    if (is_numeric($leerling)) {
+                        echo "<td>".$leerling."</td><td>".$achternaam."</td><td>".$voornaam."</td><td>".$studie."</td><td>".$vak_toets."</td>";
 
+                        $stmt = $conn->prepare("INSERT INTO herkansing (Leerling,Achternaam,Voornaam,studie,vak_toets)VALUES(?,?,?,?,?);");
+                        $stmt->bind_param("issss", $leerling, $achternaam, $voornaam, $studie, $vak_toets);
+                        $stmt->execute();
+                    }
+                    echo "</tr>";
                 }
+
+                echo "</table>";
             }
         }
 
