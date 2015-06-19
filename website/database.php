@@ -26,17 +26,27 @@ echo "<table border='1'>
 <th>vak_toets</th>
 </tr>";
 
-while($row = mysqli_fetch_array($result))
-{
-echo "<tr>";
-echo "<td>" . $row['Leerling'] . "</td>";
-echo "<td>" . $row['Achternaam'] . "</td>";
-echo "<td>" . $row['Voornaam'] . "</td>";
-echo "<td>" . $row['studie'] . "</td>";
-echo "<td>" . $row['vak_toets'] . "</td>";
-echo "</tr>";
+$vakken = array();
+
+while($row = mysqli_fetch_array($result)) {
+	$test = array();
+	preg_match('/[a-zA-Z]*/', $row['vak_toets'], $test);
+	if(!in_array($test[0], $vakken)) array_push($vakken, $test[0]);	
+
+	echo "<tr>";
+	echo "<td>" . $row['Leerling'] . "</td>";
+	echo "<td>" . $row['Achternaam'] . "</td>";
+	echo "<td>" . $row['Voornaam'] . "</td>";
+	echo "<td>" . $row['studie'] . "</td>";
+	echo "<td>" . $row['vak_toets'] . "</td>";
+	echo "</tr>";
 }
 echo "</table>";
+
+foreach ($vakken as $vak) {
+    echo $vak . "\n";
+}
+
 
 mysqli_close($conn);
 ?>
